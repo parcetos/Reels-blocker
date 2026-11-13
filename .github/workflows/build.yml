@@ -7,16 +7,17 @@ permissions:
   contents: write
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: Unzip project
         run: unzip -q ShortsBlocker.zip
+      - name: Rename app
+        run: sed -i 's|<string name="app_name">.*</string>|<string name="app_name">yp block</string>|' ShortsBlocker/app/src/main/res/values/strings.xml
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
-      - uses: android-actions/setup-android@v3
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 8.7
